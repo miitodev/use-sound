@@ -1,42 +1,29 @@
-import path from "path";
-import type { StorybookViteConfig } from "@storybook/builder-vite"
+import path from 'path';
+import type { StorybookConfig } from '@storybook/react-vite';
+import { mergeConfig } from 'vite';
 
-const config: StorybookViteConfig = {
-  features: {
-    storyStoreV7: true
-  },
-  stories: [
-    "../stories/**/*.stories.@(js|jsx|ts|tsx)",
-  ],
+const config: StorybookConfig = {
+  framework: '@storybook/react-vite',
+  stories: ['../stories/**/*.stories.@(ts|tsx)'],
   addons: [
-    "@storybook/addon-actions",
-    "@storybook/addon-controls",
-    "@storybook/addon-links",
+    '@storybook/addon-actions',
+    '@storybook/addon-controls',
+    '@storybook/addon-links',
   ],
-  framework: "@storybook/react",
   core: {
-    builder: "@storybook/builder-vite",
+    builder: '@storybook/builder-vite',
   },
   async viteFinal(config) {
-    return {
-      ...config,
-      define: {
-        ...config.define,
-        global: "window",
-      },
+    return mergeConfig(config, {
       resolve: {
         alias: [
           {
-            find: "@",
-            replacement: path.resolve(
-              __dirname,
-              ".."
-            ),
+            find: '@',
+            replacement: path.resolve(__dirname, '..'),
           },
         ],
       },
-    };
+    });
   },
 };
-
 module.exports = config;
