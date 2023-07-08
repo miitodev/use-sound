@@ -15,7 +15,7 @@
   "scripts": {
     "start": "npm run build -- --watch src",
     "build": "tsup src/index.ts --format cjs,esm --dts --clean",
-    "test": "jest--passWithNoTests",
+    "test": "jest --passWithNoTests",
     "lint": "eslint src/",
     "prettier": "prettier src/ --write",
     "prepare": "npm run build && husky install",
