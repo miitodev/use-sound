@@ -1,7 +1,6 @@
 import React from 'react';
 import Wrapper from './helpers/Wrapper';
-
-import { StoryFn } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 
 import CheckboxDemo from './demos/Checkbox';
 import SimpleDemo from './demos/Simple';
@@ -11,61 +10,63 @@ import DrumMachineDemo from './demos/DrumMachine';
 import MultipleSourcesDemo from './demos/SimpleMultipleSources';
 import ShowWhilePlayingDemo from './demos/ShowWhilePlaying';
 
-import 'focus-visible';
-
-export default {
+const meta: Meta<typeof SimpleDemo> = {
   title: 'useSound',
-  decorators: [storyFn => <Wrapper>{storyFn()}</Wrapper>],
+  component: <></>,
+  decorators: [(storyFn) => <Wrapper>{storyFn()}</Wrapper>],
 };
 
-export const Simple: StoryFn = () => {
-  return <SimpleDemo />;
+export const Simple: StoryObj<typeof SimpleDemo> = {
+  name: 'Default',
+  render: () => <SimpleDemo />,
 };
-Simple.storyName = 'Default';
 
-export const Checkbox: StoryFn = () => (
-  <div style={{ display: 'flex', width: 160, justifyContent: 'space-between' }}>
-    <CheckboxDemo />
-  </div>
-);
-Checkbox.storyName = 'Checkbox';
+export const Checkbox: StoryObj<typeof CheckboxDemo> = {
+  render: () => (
+    <div
+      style={{ display: 'flex', width: 160, justifyContent: 'space-between' }}
+    >
+      <CheckboxDemo />
+    </div>
+  ),
+};
 
-export const Hovering: StoryFn = () => {
-  return <HoverDemo />;
+export const Hovering: StoryObj<typeof HoverDemo> = {
+  name: 'Play when hovering',
+  render: () => <HoverDemo />,
 };
-Hovering.storyName = 'Play when hovering';
 
-export const Rising: StoryFn = () => {
-  return <RisingDemo />;
+export const Rising: StoryObj<typeof RisingDemo> = {
+  name: 'Rising pitch',
+  render: () => <RisingDemo />,
 };
-Rising.storyName = 'Rising pitch';
 
-export const DrumMachine: StoryFn = () => {
-  return <DrumMachineDemo />;
+export const DrumMachine: StoryObj<typeof DrumMachineDemo> = {
+  name: 'Drum machine (sprites)',
+  render: () => <DrumMachineDemo />,
 };
-DrumMachine.storyName = 'Drum machine (sprites)';
 
-export const MultipleSources: StoryFn = ({ order }) => {
-  return <MultipleSourcesDemo order={order} />;
-};
-MultipleSources.storyName = 'Multiple sources support';
-MultipleSources.args = {
-  order: 'wav_mp3',
-};
-MultipleSources.argTypes = {
-  order: {
-    name: 'Source',
-    control: {
-      type: 'radio',
+export const MultipleSources: StoryObj<typeof MultipleSourcesDemo> = {
+  name: 'Multiple sources support',
+  args: {
+    order: 'wav_mp3',
+  },
+  argTypes: {
+    order: {
+      name: 'Source',
+      control: { type: 'radio' },
       options: {
         'wav/mp3': 'wav_mp3',
         'mp3/wav': 'mp3_wav',
       },
     },
   },
+  render: (order) => <MultipleSourcesDemo order={order} />,
 };
 
-export const ShowWhilePlaying = () => {
-  return <ShowWhilePlayingDemo />;
+export const ShowWhilePlaying = {
+  name: 'With Howler events (show while playing)',
+  render: () => <ShowWhilePlayingDemo />,
 };
-ShowWhilePlaying.storyName = 'With Howler events (show while playing)';
+
+export default meta;
