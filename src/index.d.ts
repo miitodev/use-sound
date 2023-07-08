@@ -8,5 +8,5 @@ export default function useSound(
     interrupt,
     onload,
     ...delegated
-  }?: HookOptions
+  }?: HookOptions,
 ): ReturnedValue;
